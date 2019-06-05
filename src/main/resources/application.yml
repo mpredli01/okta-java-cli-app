@@ -1,0 +1,6 @@
+okta:
+  oauth2:
+    issuer: "https://dev-287826.okta.com/oauth2/default"
+    client-id: "0oan47nqdMmuhvBkg356"
+    client-secret: "iGfqykyZ8hiqC-gonUfu_1dDzNn977svzUjEJxpE"
+    redirectUri: "http://localhost:8080/login/oauth2/code/okta"
