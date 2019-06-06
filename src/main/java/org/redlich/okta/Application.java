@@ -36,13 +36,16 @@ public class Application {
 
             String issuer = "";
             boolean newUser = false;
-            if (args.length == 2) {
+            boolean newPassword = false;
+            if (args.length == 3) {
                 issuer = args[0];
                 newUser = Boolean.parseBoolean(args[1]);
-            } else {
-                log.error("\n\n\tUsage: Application issuerUrl true|false\n");
+                newPassword = Boolean.parseBoolean(args[2]);
+                }
+            else {
+                log.error("\n\n\tUsage: Application issuerUrl true|false true|false\n");
                 System.exit(1);
-            }
+                }
 
             log.info("\n\n\t-- Okta API Demo Application --\n");
             log.info("\n\n\tIssuer: " + issuer + "\n");
@@ -77,10 +80,20 @@ public class Application {
                 log.info("\n\n\t\t * Not creating a new user at this time...\n");
                 }
 
+            if(newPassword) {
+                application.changePassword(client,user);
+                }
+            else {
+                log.info("\n\n\t\t * Not changing the password at this time...\n");
+                }
+
+            log.info("\n\n\t-- Get Password Reset URL --\n");
+            String resetUrl = application.forgotPassword(user);
+            log.info("\n\n\t\t * URL: " + resetUrl + "\n");
+
+            log.info("\n\n\t-- List Applications --\n");
             application.listApplications(client);
-            application.forgotPassword(user);
-            // application.createEndpoint(client);
-            // application.changePassword(client,user);
+
             }
 
         catch(MalformedURLException exception) {
@@ -107,11 +120,11 @@ public class Application {
         char[] password = {'O','c','t','o','b','e','r','2','4','*'};
         User user = UserBuilder.instance()
                 .setEmail(email)
-                .setFirstName("Rowena")
-                .setLastName("Redlich")
+                .setFirstName("Barry")
+                .setLastName("Burd")
                 .setPassword(password)
-                .setSecurityQuestion("Where did you meet your spouse?")
-                .setSecurityQuestionAnswer("Flemington")
+                .setSecurityQuestion("Where are the ACGNJ Java Users Group meetigns held?")
+                .setSecurityQuestionAnswer("Madison")
                 .setActive(true)
                 .buildAndCreate(client);
         return user;
@@ -121,7 +134,7 @@ public class Application {
         return new URL(new URL(issuer), "/").toString();
         }
 
-        private User getUser(Client client, String userId) {
+    private User getUser(Client client, String userId) {
         return client.getUser(userId);
         }
         
@@ -144,28 +157,17 @@ public class Application {
 
     private void listApplications(Client client) {
         client.listApplications().stream()
-                .forEach(item -> System.out.println(item));
-        }
-
-    private void createEndpoint(Client client) {
-        // Create an IdP, see: https://developer.okta.com/docs/api/resources/idps#add-identity-provider
-        ExtensibleResource resource = client.instantiate(ExtensibleResource.class);
-        ExtensibleResource protocolNode = client.instantiate(ExtensibleResource.class);
-        protocolNode.put("type","OAUTH");
-        resource.put("protocol",protocolNode);
-
-        ExtensibleResource result = client.http()
-                .setBody(resource)
-                .post("/api/v1/idps",ExtensibleResource.class);
+                .forEach(item -> System.out.println("\n\n\t\t * " + item + "\n"));
         }
 
     private void changePassword(Client client,User user) {
         UserCredentials credentials = user.changePassword(client.instantiate(ChangePasswordRequest.class)
-                .setOldPassword(client.instantiate(PasswordCredential.class).setValue("Okt0b3r24@".toCharArray()))
-                .setNewPassword(client.instantiate(PasswordCredential.class).setValue("October24*".toCharArray())));
+                .setOldPassword(client.instantiate(PasswordCredential.class).setValue("October24*".toCharArray()))
+                .setNewPassword(client.instantiate(PasswordCredential.class).setValue("Okt0b3r24@".toCharArray())));
         }
 
-    private void forgotPassword(User user) {
+    private String forgotPassword(User user) {
         ForgotPasswordResponse response = user.forgotPassword(false, null);
+        return response.getResetPasswordUrl();
         }
     }
