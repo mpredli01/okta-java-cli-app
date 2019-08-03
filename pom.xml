@@ -46,13 +46,13 @@
         <dependency>
             <groupId>com.okta.sdk</groupId>
             <artifactId>okta-sdk-impl</artifactId>
-            <version>1.5.2</version>
+            <version>1.5.3</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.okta.sdk</groupId>
             <artifactId>okta-sdk-httpclient</artifactId>
-            <version>1.5.2</version>
+            <version>1.5.3</version>
             <scope>runtime</scope>
         </dependency>
        <dependency>
