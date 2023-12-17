@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- <okta.sdk.api.version>1.6.0</okta.sdk.api.version> -->
-        <okta.sdk.api.version>10.2.1</okta.sdk.api.version>
+        <okta.sdk.api.version>1.6.0</okta.sdk.api.version>
+        <!-- <okta.sdk.api.version>10.2.1</okta.sdk.api.version> -->
         <okta.sdk.impl.version>10.2.2</okta.sdk.impl.version>
         <!-- <okta.sdk.httpclient.version>1.6.0</okta.sdk.httpclient.version> -->
         <okta.sdk.httpclient.version>8.2.3</okta.sdk.httpclient.version>
-        <okta.spring.boot.starter.version>3.0.4</okta.spring.boot.starter.version>
+        <okta.spring.boot.starter.version>3.0.6</okta.spring.boot.starter.version>
         <spring.boot.starter.actuator.version>3.1.6</spring.boot.starter.actuator.version>
         <!-- <spring.boot.starter.web.version>2.7.18</spring.boot.starter.web.version> -->
         <spring.boot.starter.web.version>3.1.0</spring.boot.starter.web.version>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.okta.spring</groupId>
             <artifactId>okta-spring-boot-starter</artifactId>
-            <version>3.0.6</version>
+            <version>${okta.spring.boot.starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
